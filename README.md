@@ -1,6 +1,5 @@
 # Dashboard
-![Screenshot 2023-07-28 152259](https://github.com/yashdoshi12/Sales_report_using_PowerBi/assets/39629707/23e117f3-fd1d-4c0b-a0a7-391795d3ca79)
+<img width="1342" height="752" alt="256790772-23e117f3-fd1d-4c0b-a0a7-391795d3ca79" src="https://github.com/user-attachments/assets/406f40d0-e752-4bd4-85b8-aed2d1b364a8" />
 
-<hr />
-<br />
+
 
