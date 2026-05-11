@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATA_DIR=/app
+      - PORT=8000
+    volumes:
+      - ./Details.csv:/app/Details.csv:ro
+      - ./Orders.csv:/app/Orders.csv:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
