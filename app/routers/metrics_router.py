@@ -34,7 +34,7 @@ async def growth_rate() -> dict[str, float]:
 
 
 @router.get("/retention")
-async def retention(window_days: int = 90) -> dict[str, float]:
+async def retention(window_days: int = 90) -> dict[str, Any]:
     """Return customer retention rate over the last N days."""
     if window_days <= 0:
         raise HTTPException(status_code=422, detail="window_days must be positive")
@@ -50,7 +50,7 @@ async def retention(window_days: int = 90) -> dict[str, float]:
 
 
 @router.get("/gini")
-async def gini(column: str = "Amount") -> dict[str, float]:
+async def gini(column: str = "Amount") -> dict[str, Any]:
     """Return Gini coefficient for revenue concentration."""
     if column not in ("Amount", "Profit"):
         raise HTTPException(status_code=422, detail="column must be 'Amount' or 'Profit'")

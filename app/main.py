@@ -15,6 +15,7 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from app.middleware import RateLimitMiddleware
 from app.models import (
     CategoryRevenueItem,
     DriftRequest,
@@ -26,7 +27,6 @@ from app.models import (
     SummaryResponse,
     TopCustomerItem,
 )
-from app.middleware import RateLimitMiddleware
 from app.routers import metrics_router
 from src import aggregations, analysis, data_loader, forecasting, monitoring
 

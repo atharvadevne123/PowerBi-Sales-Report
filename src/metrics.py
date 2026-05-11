@@ -80,8 +80,8 @@ def gini_coefficient(df: pd.DataFrame, column: str = "Amount") -> float:
     values = df.groupby("CustomerName")[column].sum().values
     if len(values) == 0 or values.sum() == 0:
         return 0.0
-    values = np.sort(values)
+    values = np.sort(values.astype(float))
     n = len(values)
-    cumsum = np.cumsum(values)
-    gini = (2 * np.sum(cumsum) / cumsum[-1] - (n + 1)) / n
-    return float(round(gini, 6))
+    total = values.sum()
+    gini = (2 * np.sum(np.arange(1, n + 1) * values) / (n * total)) - (n + 1) / n
+    return float(round(max(0.0, gini), 6))

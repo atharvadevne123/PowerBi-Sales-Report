@@ -69,11 +69,11 @@ def generate_report(
 
     labels = {
         "total_orders": "Total Orders",
-        "total_revenue": "Total Revenue (₹)",
-        "total_profit": "Total Profit (₹)",
+        "total_revenue": "Total Revenue (Rs.)",
+        "total_profit": "Total Profit (Rs.)",
         "total_quantity": "Units Sold",
         "profit_margin": "Profit Margin",
-        "avg_order_value": "Avg Order Value (₹)",
+        "avg_order_value": "Avg Order Value (Rs.)",
     }
     for key, label in labels.items():
         val = stats.get(key, "N/A")

@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
+
+_REPO = "/tmp/lantern-work/PowerBi-Sales-Report"
+_ENV = {**os.environ, "PYTHONPATH": _REPO}
 
 
 def test_load_data_script_runs(details_csv: Path, orders_csv: Path) -> None:
@@ -17,7 +21,8 @@ def test_load_data_script_runs(details_csv: Path, orders_csv: Path) -> None:
         ],
         capture_output=True,
         text=True,
-        cwd="/tmp/lantern-work/PowerBi-Sales-Report",
+        cwd=_REPO,
+        env=_ENV,
     )
     assert result.returncode == 0
     assert "Total Revenue" in result.stdout
@@ -33,7 +38,8 @@ def test_load_data_script_shows_profit_margin(details_csv: Path, orders_csv: Pat
         ],
         capture_output=True,
         text=True,
-        cwd="/tmp/lantern-work/PowerBi-Sales-Report",
+        cwd=_REPO,
+        env=_ENV,
     )
     assert "Profit Margin" in result.stdout
 
@@ -50,7 +56,8 @@ def test_generate_report_script_creates_pdf(details_csv: Path, orders_csv: Path,
         ],
         capture_output=True,
         text=True,
-        cwd="/tmp/lantern-work/PowerBi-Sales-Report",
+        cwd=_REPO,
+        env=_ENV,
     )
     assert result.returncode == 0
     assert out.exists()

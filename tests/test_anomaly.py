@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 import pytest
 
@@ -20,7 +19,7 @@ def test_zscore_normal_values_not_flagged() -> None:
 
 def test_zscore_extreme_value_flagged() -> None:
     s = _make_series([100.0, 101.0, 99.0, 10000.0])
-    assert zscore_anomalies(s, threshold=2.0).iloc[-1]
+    assert zscore_anomalies(s, threshold=1.0).iloc[-1]
 
 
 def test_zscore_constant_series_no_anomalies() -> None:

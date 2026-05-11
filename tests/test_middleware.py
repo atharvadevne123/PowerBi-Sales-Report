@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock
-
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from app.middleware import RateLimitMiddleware, _RATE_LIMIT, _rate_counters
+from app.middleware import _RATE_LIMIT, RateLimitMiddleware, _rate_counters
 
 
 @pytest.fixture()
