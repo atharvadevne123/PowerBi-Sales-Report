@@ -27,7 +27,7 @@ from app.models import (
     TopCustomerItem,
 )
 from app.middleware import RateLimitMiddleware
-from src import analysis, data_loader, forecasting, monitoring
+from src import aggregations, analysis, data_loader, forecasting, monitoring
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -216,6 +216,42 @@ async def download_report() -> FileResponse:
     except Exception as exc:
         logger.error("report error: %s", exc)
         raise HTTPException(status_code=500, detail="Report generation failed") from exc
+
+
+@app.get("/customers/clv", tags=["Analytics"])
+async def customer_clv() -> list[dict[str, Any]]:
+    """Return customer lifetime value metrics for all customers."""
+    try:
+        df = _get_df()
+        clv = aggregations.customer_lifetime_value(df).reset_index()
+        return clv.to_dict(orient="records")
+    except Exception as exc:
+        logger.error("customers/clv error: %s", exc)
+        raise HTTPException(status_code=500, detail="CLV computation failed") from exc
+
+
+@app.get("/revenue/quarterly", tags=["Analytics"])
+async def quarterly_revenue() -> list[dict[str, Any]]:
+    """Return revenue and profit aggregated by quarter."""
+    try:
+        df = _get_df()
+        result = aggregations.quarterly_summary(df)
+        return result.to_dict(orient="records")
+    except Exception as exc:
+        logger.error("revenue/quarterly error: %s", exc)
+        raise HTTPException(status_code=500, detail="Quarterly revenue failed") from exc
+
+
+@app.get("/subcategories/profitability", tags=["Analytics"])
+async def subcategory_profitability() -> list[dict[str, Any]]:
+    """Return revenue, profit, and margin for each sub-category."""
+    try:
+        df = _get_df()
+        result = aggregations.subcategory_profitability(df)
+        return result.to_dict(orient="records")
+    except Exception as exc:
+        logger.error("subcategories/profitability error: %s", exc)
+        raise HTTPException(status_code=500, detail="Profitability computation failed") from exc
 
 
 if __name__ == "__main__":
