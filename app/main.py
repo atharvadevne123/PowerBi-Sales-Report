@@ -27,6 +27,7 @@ from app.models import (
     TopCustomerItem,
 )
 from app.middleware import RateLimitMiddleware
+from app.routers import metrics_router
 from src import aggregations, analysis, data_loader, forecasting, monitoring
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -61,6 +62,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.include_router(metrics_router.router)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(
     CORSMiddleware,
