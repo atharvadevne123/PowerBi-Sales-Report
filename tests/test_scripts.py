@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-_REPO = "/tmp/lantern-work/PowerBi-Sales-Report"
+_REPO = str(Path(__file__).parent.parent)
 _ENV = {**os.environ, "PYTHONPATH": _REPO}
 
 
